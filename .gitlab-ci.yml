@@ -1,0 +1,20 @@
+stages:
+- build
+
+build:
+
+  stage: build
+  image: docker
+  only:
+  - main
+  variables:
+    CONTAINER_IMAGE: wbtoken-cookie-bot:${CI_COMMIT_SHORT_SHA}
+    CONTAINER_IMAGE_LATEST: wbtoken-cookie-bot:latest
+    COMPOSE_DOCKER_CLI_BUILD: 1
+    DOCKER_BUILDKIT: 1
+  before_script:
+  - docker login -u admin -p TTX4oD*F registry.mplab.io
+  script:
+  - docker build -t ${CONTAINER_IMAGE} .
+  - docker tag ${CONTAINER_IMAGE} registry.mplab.io/${CONTAINER_IMAGE_LATEST}
+  - docker push registry.mplab.io/${CONTAINER_IMAGE_LATEST}

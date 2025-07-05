@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  python3:
+    container_name: wbtoken-cookie-bot
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /mnt/wb_token_bot:/main_app/data
